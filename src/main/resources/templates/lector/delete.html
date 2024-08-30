@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Lector</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff; /* Fondo blanco para el contenedor */
+            border-radius: 12px; /* Bordes redondeados */
+            padding: 2rem; /* Espaciado interno del contenedor */
+            max-width: 500px; /* Ancho máximo del contenedor */
+            width: 100%; /* Ancho completo para pantallas pequeñas */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+            transition: transform 0.3s ease-in-out; /* Transición suave */
+        }
+        .container:hover {
+            transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
+        }
+        h1 {
+            color: #343a40; /* Color gris oscuro para el título */
+            margin-bottom: 1.5rem; /* Espaciado inferior del título */
+            font-weight: 700; /* Negrita para el título */
+            text-align: center; /* Centrado del título */
+        }
+        h3 {
+            color: #666; /* Color gris medio para el subtítulo */
+            text-align: center; /* Centrado del subtítulo */
+        }
+        dt {
+            color: #333; /* Color gris oscuro para las etiquetas de definición */
+        }
+        dd {
+            color: #666; /* Color gris medio para los valores de definición */
+        }
+        .alert {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            border-radius: 12px; /* Bordes redondeados para la alerta */
+            padding: 1rem;
+            text-align: center; /* Centrado del texto en la alerta */
+            margin-bottom: 1.5rem; /* Espaciado inferior de la alerta */
+        }
+        .btn-danger, .btn-secondary {
+            border-radius: 20px; /* Bordes redondeados para los botones */
+            font-size: 1rem; /* Tamaño de fuente para los botones */
+            padding: 0.5rem 1.5rem; /* Espaciado interno de los botones */
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición suave */
+            width: 100%; /* Botones de ancho completo */
+            margin-top: 10px; /* Espaciado superior entre botones */
+        }
+        .btn-danger {
+            color: #fff; /* Texto blanco para el botón de eliminar */
+            background-color: #c0392b; /* Fondo rojo oscuro para el botón de eliminar */
+        }
+        .btn-danger:hover {
+            background-color: #e74c3c; /* Fondo rojo más claro al pasar el ratón */
+        }
+        .btn-secondary {
+            color: #fff; /* Texto blanco para el botón de regresar */
+            background-color: #6c757d; /* Fondo gris oscuro para el botón de regresar */
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Fondo gris más oscuro al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Eliminar Lector</h1>
+    <div class="alert alert-warning" role="alert">
+        ¿Está seguro de que desea eliminar este registro?
+    </div>
+    <dl class="row">
+        <dt class="col-sm-4">ID</dt>
+        <dd class="col-sm-8" th:text="${lector.id}"></dd>
+
+        <dt class="col-sm-4">Nombre</dt>
+        <dd class="col-sm-8" th:text="${lector.nombre}"></dd>
+
+        <dt class="col-sm-4">Apellido</dt>
+        <dd class="col-sm-8" th:text="${lector.apellido}"></dd>
+
+        <dt class="col-sm-4">Email</dt>
+        <dd class="col-sm-8" th:text="${lector.email}"></dd>
+
+        <dt class="col-sm-4">Teléfono</dt>
+        <dd class="col-sm-8" th:text="${lector.telefono}"></dd>
+    </dl>
+    <form th:action="@{/Lectores/delete}" method="post">
+        <input type="hidden" name="id" th:value="${lector.id}">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a th:href="@{/Lectores}" class="btn btn-secondary">Regresar</a>
+    </form>
+</div>
+</body>
+</html>

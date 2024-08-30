@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: translateY(-5px); /* Eleva la tarjeta al pasar el ratón */
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            margin-bottom: 1rem;
+            background-color: #ffffff;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 12px 12px 0 0;
+            padding: 0.75rem 1.25rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            color: #343a40;
+            font-weight: 600;
+        }
+        .card-text {
+            font-size: 0.95rem;
+            color: #495057;
+            margin-bottom: 0.75rem;
+        }
+        .btn-outline-info, .btn-outline-secondary {
+            border-radius: 20px;
+            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-outline-info {
+            color: #17a2b8;
+            border-color: #17a2b8;
+            background-color: #f8f9fa;
+        }
+        .btn-outline-info:hover {
+            background-color: #117a8b;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+        }
+        .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+            background-color: #f8f9fa;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #5a6268;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+        }
+        ul {
+            padding-left: 1.5rem;
+        }
+        li {
+            list-style-type: disc;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:if="${msg != null}">
+        <script th:inline="javascript">
+            Swal.fire({
+                title: "Confirmación",
+                text: [[${msg}]],
+                icon: "success"
+            });
+        </script>
+    </div>
+    <div th:if="${error != null}">
+        <script th:inline="javascript">
+            Swal.fire({
+                title: "Error",
+                text: [[${error}]],
+                icon: "error"
+            });
+        </script>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Detalles del Usuario</h1>
+        <div class="card">
+            <div class="card-header">
+                Usuario ID: <span th:text="${usuario.id}"></span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Nombre de Usuario: <span th:text="${usuario.login}"></span></h5>
+                <p class="card-text"><strong>Estado:</strong> <span th:text="${usuario.status == '1' ? 'ACTIVO' : 'INACTIVO'}"></span></p>
+                <p class="card-text"><strong>Roles:</strong></p>
+                <ul>
+                    <li th:each="rol : ${usuario.roles}" th:text="${rol.nombre}"></li>
+                </ul>
+                <div>
+                    <a th:href="@{/usuarios/edit/{id}(id=${usuario.id})}" class="btn btn-outline-info">Editar Usuario</a>
+                    <a th:href="@{/usuarios}" class="btn btn-outline-secondary">Volver a Listado</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

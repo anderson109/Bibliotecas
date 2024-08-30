@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: translateY(-5px); /* Eleva la tarjeta al pasar el ratón */
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .form-control {
+            border-radius: 8px;
+            font-size: 0.9rem;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+        }
+        label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 20px;
+            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            width: 100%;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+        }
+        .btn-secondary {
+            border-radius: 20px;
+            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .btn-secondary:hover {
+            background-color: #6c757d;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+        }
+        .form-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <h1 class="mb-4">Editar Usuario</h1>
+    <form th:action="@{/usuarios/update/{id}(id=${usuario.id})}" th:object="${usuario}" method="post">
+        <div class="form-group">
+            <label for="username">Nombre de Usuario:</label>
+            <input type="text" id="username" th:field="*{login}" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="roles">Roles:</label>
+            <select id="roles" name="selectedRoles" multiple class="form-control">
+                <option th:each="rol : ${roles}"
+                        th:value="${rol.id}"
+                        th:text="${rol.nombre}"
+                        th:selected="${usuario.roles != null and usuario.roles.contains(rol)}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="clave">Contraseña:</label>
+            <input type="password" id="clave" th:field="*{clave}" class="form-control" />
+            <small class="form-text text-muted">Dejar en blanco para mantener la contraseña actual.</small>
+        </div>
+        <div class="form-group">
+            <label for="status">Estado:</label>
+            <select id="status" th:field="*{status}" class="form-control">
+                <option value="1" th:selected="${usuario.status == 1}">ACTIVO</option>
+                <option value="0" th:selected="${usuario.status == 0}">INACTIVO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a th:href="@{/usuarios}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

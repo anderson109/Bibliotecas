@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Multas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Fondo azul claro */
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+        .btn-outline-primary {
+            color: #ffffff;
+            background-color: #1abc9c;
+            border-color: #1abc9c;
+        }
+        .btn-outline-primary:hover {
+            background-color: #16a085;
+            border-color: #16a085;
+            color: #ffffff;
+        }
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            margin: 1rem; /* Espaciado alrededor de las tarjetas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            flex: 1; /* Permite que las tarjetas crezcan y se ajusten */
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card-body {
+            padding: 1rem;
+            background: #ecf0f1; /* Fondo gris claro */
+            color: #2c3e50; /* Texto oscuro */
+        }
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-text {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn-outline-secondary, .btn-outline-info, .btn-outline-danger {
+            border-radius: 20px;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+        }
+        .btn-outline-secondary {
+            color: #2980b9;
+            border-color: #2980b9;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #2980b9;
+            color: #fff;
+        }
+        .btn-outline-info {
+            color: #8e44ad;
+            border-color: #8e44ad;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-info:hover {
+            background-color: #8e44ad;
+            color: #fff;
+        }
+        .btn-outline-danger {
+            color: #c0392b;
+            border-color: #c0392b;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-danger:hover {
+            background-color: #c0392b;
+            color: #fff;
+        }
+        .pagination .page-link {
+            color: #2c3e50;
+            border-color: #34495e;
+        }
+        .pagination .page-link:hover {
+            background-color: #34495e;
+            color: #fff;
+        }
+        /* Flexbox para tarjetas */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
+            justify-content: space-between; /* Espaciado entre tarjetas */
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:if="${msg != null}">
+        <script th:inline="javascript">
+            Swal.fire({
+                title: "Confirmación",
+                text: [[${msg}]],
+                icon: "success"
+            });
+        </script>
+    </div>
+    <div th:if="${error != null}">
+        <script th:inline="javascript">
+            Swal.fire({
+                title: "Error",
+                text: [[${error}]],
+                icon: "error"
+            });
+        </script>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Listado de Multas</h1>
+        <a th:href="@{/multas/create}" class="btn btn-outline-primary mb-3">Nueva Multa</a>
+
+        <div class="card-container" th:each="item : ${multas.content}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Multa ID: <span th:text="${item.id}"></span></h5>
+                    <p class="card-text"><strong>Lector:</strong> <span th:text="${item.lector.nombre} + ' ' + ${item.lector.apellido}"></span></p>
+                    <p class="card-text"><strong>Libro:</strong> <span th:text="${item.libro.nombre}"></span></p>
+                    <p class="card-text"><strong>Fecha de Multa:</strong> <span th:text="${item.fechaMulta}"></span></p>
+                    <p class="card-text"><strong>Monto:</strong> <span th:text="${item.monto}"></span></p>
+                    <p class="card-text"><strong>Estado:</strong> <span th:text="${item.estado}"></span></p>
+                    <div class="btn-group">
+                        <a th:href="@{/multas/details/{id}(id=${item.id})}" class="btn btn-outline-secondary">Detalles</a>
+                        <a th:href="@{/multas/edit/{id}(id=${item.id})}" class="btn btn-outline-info">Editar</a>
+                        <a th:href="@{/multas/remove/{id}(id=${item.id})}" class="btn btn-outline-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="Page navigation example mt-4">
+            <ul class="pagination">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{|/multas?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Lector-Libro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Fondo azul claro */
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+        .btn-outline-primary {
+            color: #ffffff;
+            background-color: #1abc9c;
+            border-color: #1abc9c;
+        }
+        .btn-outline-primary:hover {
+            background-color: #16a085;
+            border-color: #16a085;
+            color: #ffffff;
+        }
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            margin: 1rem; /* Espaciado alrededor de las tarjetas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            flex: 1; /* Permite que las tarjetas crezcan y se ajusten */
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card-body {
+            padding: 1rem;
+            background: #ecf0f1; /* Fondo gris claro */
+            color: #2c3e50; /* Texto oscuro */
+        }
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-text {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn-outline-secondary, .btn-outline-info, .btn-outline-danger {
+            border-radius: 20px;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+        }
+        .btn-outline-secondary {
+            color: #2980b9;
+            border-color: #2980b9;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #2980b9;
+            color: #fff;
+        }
+        .btn-outline-info {
+            color: #8e44ad;
+            border-color: #8e44ad;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-info:hover {
+            background-color: #8e44ad;
+            color: #fff;
+        }
+        .btn-outline-danger {
+            color: #c0392b;
+            border-color: #c0392b;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-danger:hover {
+            background-color: #c0392b;
+            color: #fff;
+        }
+        .pagination .page-link {
+            color: #2c3e50;
+            border-color: #34495e;
+        }
+        .pagination .page-link:hover {
+            background-color: #34495e;
+            color: #fff;
+        }
+        /* Flexbox para tarjetas */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
+            justify-content: space-between; /* Espaciado entre tarjetas */
+        }
+    </style>
+
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Editar Lector-Libro</h1>
+    <div>
+        <form th:action="@{/lectorLibros/update}" th:object="${lectorLibro}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lector" class="form-label">Lector</label>
+                        <select class="form-control" name="lectorId" id="lector" required>
+                            <option th:each="lector : ${lectores}" th:value="${lector.id}"
+                                    th:text="${lector.nombre} + ' ' + ${lector.apellido}"
+                                    th:selected="${lector.id == lectorLibro.lector.id}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="libro" class="form-label">Libro</label>
+                        <select class="form-control" name="libroId" id="libro" required>
+                            <option th:each="libro : ${libros}" th:value="${libro.id}"
+                                    th:text="${libro.nombre}"
+                                    th:selected="${libro.id == lectorLibro.libro.id}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="diaPrestamo" class="form-label">Día de Préstamo</label>
+                        <input type="date" class="form-control" th:field="*{diaPrestamo}" id="diaPrestamo" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="diaDevolucion" class="form-label">Día de Devolución</label>
+                        <input type="date" class="form-control" th:field="*{diaDevolucion}" id="diaDevolucion" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start" style="gap: 2rem;">
+                <button type="submit" class="btn btn-primary">Guardar</button> |
+                <a th:href="@{/lectorLibros}" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

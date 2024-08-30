@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Lector-Libro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Fondo azul claro */
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+        .btn-outline-primary {
+            color: #ffffff;
+            background-color: #1abc9c;
+            border-color: #1abc9c;
+        }
+        .btn-outline-primary:hover {
+            background-color: #16a085;
+            border-color: #16a085;
+            color: #ffffff;
+        }
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            margin: 1rem; /* Espaciado alrededor de las tarjetas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            flex: 1; /* Permite que las tarjetas crezcan y se ajusten */
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card-body {
+            padding: 1rem;
+            background: #ecf0f1; /* Fondo gris claro */
+            color: #2c3e50; /* Texto oscuro */
+        }
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-text {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn-outline-secondary, .btn-outline-info, .btn-outline-danger {
+            border-radius: 20px;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+        }
+        .btn-outline-secondary {
+            color: #2980b9;
+            border-color: #2980b9;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #2980b9;
+            color: #fff;
+        }
+        .btn-outline-info {
+            color: #8e44ad;
+            border-color: #8e44ad;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-info:hover {
+            background-color: #8e44ad;
+            color: #fff;
+        }
+        .btn-outline-danger {
+            color: #c0392b;
+            border-color: #c0392b;
+            background-color: #ecf0f1;
+        }
+        .btn-outline-danger:hover {
+            background-color: #c0392b;
+            color: #fff;
+        }
+        .pagination .page-link {
+            color: #2c3e50;
+            border-color: #34495e;
+        }
+        .pagination .page-link:hover {
+            background-color: #34495e;
+            color: #fff;
+        }
+        /* Flexbox para tarjetas */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
+            justify-content: space-between; /* Espaciado entre tarjetas */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Detalles del Lector-Libro</h1>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${lectorLibro.id}"></dd>
+
+            <dt class="col-sm-2">Lector</dt>
+            <dd class="col-sm-10" th:text="${lectorLibro.lector.nombre} + ' ' + ${lectorLibro.lector.apellido}"></dd>
+
+            <dt class="col-sm-2">Libro</dt>
+            <dd class="col-sm-10" th:text="${lectorLibro.libro.nombre}"></dd>
+
+            <dt class="col-sm-2">Día de Préstamo</dt>
+            <dd class="col-sm-10" th:text="${lectorLibro.diaPrestamo}"></dd>
+
+            <dt class="col-sm-2">Día de Devolución</dt>
+            <dd class="col-sm-10" th:text="${lectorLibro.diaDevolucion}"></dd>
+        </dl>
+
+        <a th:href="@{/lectorLibros/edit/{id}(id=${lectorLibro.id})}" class="btn btn-outline-info">Editar</a>
+        <a th:href="@{/lectorLibros}" class="btn btn-outline-secondary">Regresar</a>
+    </div>
+</div>
+
+<!-- Enlaces a jQuery y Bootstrap JS para funcionalidad adicional -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

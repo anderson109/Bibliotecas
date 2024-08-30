@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Lector-Libro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: translateY(-5px); /* Eleva la tarjeta al pasar el ratón */
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .alert {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .btn-outline-danger, .btn-outline-secondary {
+            border-radius: 20px;
+            font-size: 1rem;
+            padding: 0.5rem 1.5rem;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-outline-danger {
+            color: #c0392b;
+            border-color: #c0392b;
+            background-color: #f8f9fa;
+        }
+        .btn-outline-danger:hover {
+            background-color: #e74c3c;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+        }
+        .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+            background-color: #f8f9fa;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #5a6268;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Eliminar Lector-Libro</h1>
+    <div class="alert alert-warning" role="alert">
+        ¿Está seguro de que desea eliminar el registro de préstamo de libro?
+    </div>
+    <div>
+        <dl class="row">
+            <dt class="col-sm-4">ID</dt>
+            <dd class="col-sm-8" th:text="${lectorLibro.id}"></dd>
+
+            <dt class="col-sm-4">Lector</dt>
+            <dd class="col-sm-8" th:text="${lectorLibro.lector.nombre} + ' ' + ${lectorLibro.lector.apellido}"></dd>
+
+            <dt class="col-sm-4">Libro</dt>
+            <dd class="col-sm-8" th:text="${lectorLibro.libro.nombre}"></dd>
+
+            <dt class="col-sm-4">Día de Préstamo</dt>
+            <dd class="col-sm-8" th:text="${lectorLibro.diaPrestamo}"></dd>
+
+            <dt class="col-sm-4">Día de Devolución</dt>
+            <dd class="col-sm-8" th:text="${lectorLibro.diaDevolucion}"></dd>
+        </dl>
+        <form th:action="@{/lectorLibros/delete}" method="post">
+            <input type="hidden" name="id" th:value="${lectorLibro.id}">
+            <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+            <a th:href="@{/lectorLibros}" class="btn btn-outline-secondary">Regresar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>
